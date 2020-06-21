@@ -4,6 +4,9 @@ import pyautogui
 from datetime import datetime
 from dotenv import load_dotenv
 
+from bot import FloppyBot
+from parser import Parser
+
 """
 1.) Get the coordinates from dotenv
 2.) Sleep 30 seconds

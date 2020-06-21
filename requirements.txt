@@ -1,0 +1,7 @@
+# requirements.txt
+pytesseract
+tesseract
+Pillow
+opencv-python-headless
+requests
+pyautogui

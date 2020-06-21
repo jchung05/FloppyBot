@@ -4,11 +4,15 @@ Discord bot and client script for OCR capturing MVP timestamps in Maplestory Reb
 # Required Installations
   [Tesseract](https://github.com/UB-Mannheim/tesseract/wiki) - When you specify which folder you are downloading to, copy that into the .env file under TESSERACT_PATH
   [Python3.5+](https://www.python.org/downloads/)
+  **OPTIONAL**[MouseLocator](http://efigureout.com/free-utility-to-locate-mouse-cursor-position/)
 
 # How to Use:
+  * Clone or download me!
   * Fill out the .env file in the folder
   * Start MapleStory
-  * Run the `run.sh`
+  * Open a Command Prompt with admin privileges and navigate to the folder location
+  * Run the command `bash run.sh` and leave MapleStory on main focus (preferably with the chat box in front of a black background
+  * To kill the program, go back to the Command Prompt and press Ctrl+C
 
 # Three modules
 

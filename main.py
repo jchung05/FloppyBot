@@ -35,7 +35,7 @@ cleanup_counter = 1
 try:
     while True:
         start_time = datetime.now()
-        print(f'{start_time.strftime("%H:%M:%S")}: Parsing...')
+        print('{}: Parsing...'.format(start_time.strftime("%H:%M:%S")))
 
         ss = pyautogui.screenshot(region=(X,Y,W,H))
 

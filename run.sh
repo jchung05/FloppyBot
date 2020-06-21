@@ -1,3 +1,4 @@
-pip install -r $PWD/requirements.txt
-cp $PWD/dotenv_template $PWD/.env
-python $PWD/main.py
+# I guess this is for Windows
+pip3.exe install -r "requirements.txt"
+cp "dotenv_template" ".env"
+python3 "main.py"

@@ -18,7 +18,7 @@ class FloppyBot(object):
     def sendMessage(self):
         for k,v in list(self.__queue.items()):
             # TODO: Add location and name later "@ {v.location} - {v.name}"
-            self.data["content"] = f'<@&{self.__ROLE_ID}> @ xx:{k} ch{v["channel"]}'
+            self.data["content"] = '<@&{}> @ xx:{} ch{}'.format(self.__ROLE_ID,k,v["channel"])
             requests.post(self.__HOOK, data=json.dumps(self.data), headers={"Content-Type": "application/json"})
 
             self.__garbage.add(k)

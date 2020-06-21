@@ -3,7 +3,6 @@ try:
 except ImportError:
     import Image, ImageEnhance, ImageOps, ImageMath
 import pytesseract
-
 import cv2
 import numpy as np
 import re

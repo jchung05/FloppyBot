@@ -1,10 +1,14 @@
 # FloppyBot
-Discord bot and client script for OCR capturing MVP timestamps in Maplestory Reboot server. Requires Python3.5+
+Discord bot and client script for OCR capturing MVP timestamps in Maplestory Reboot server. Requires Python3.5+ and Tesseract installed
+
+# Required Installations
+  [Tesseract](https://github.com/UB-Mannheim/tesseract/wiki) - When you specify which folder you are downloading to, copy that into the .env file under TESSERACT_PATH
+  [Python3.5+](https://www.python.org/downloads/)
 
 # How to Use:
   * Fill out the .env file in the folder
-  * Run the `run.sh`
   * Start MapleStory
+  * Run the `run.sh`
 
 # Three modules
 
@@ -17,7 +21,7 @@ Discord bot and client script for OCR capturing MVP timestamps in Maplestory Reb
   future image parses can check against the garbage pile for duplicate matches. The garbage pile is cleaned
   up every 15 minutes.
 
-## ScreenshotParser
+## ImageParser
   CURRENTLY UNTRAINED. Tesseract/OpenCV image parsing module. Will check for any screenshots in the specified
   folder and parse them. The requirements for a successful push to the announcement queue are currently:
   
@@ -30,3 +34,12 @@ Discord bot and client script for OCR capturing MVP timestamps in Maplestory Reb
    * Parsing names
    * Better accuracy for character recognition ('n' and 'h', 'I' and 'l', etc)
    * A GUI for user input for variables
+
+# Troubleshoot
+  You may run into some problems. That's expected because nobody programs on Windows! Here are a few and what to do:
+
+## No Tesseract Path
+  `pytesseract.pytesseract.TesseractNotFoundError: tesseract is not installed or it's not in your PATH` means your path to Tesseract is incorrect. Double check its location and copy the string correctly!
+
+## Windows Thinks It Knows Better Than You
+  You will likely see something like `run.sh: line 4: /your/path/to/Python/python: Permission denied`. If you do it's because Windows has its own special Python aliases. Please refer to [this StackOverflow solution](https://stackoverflow.com/a/57168165/4596298) for instructions on how to disable them.

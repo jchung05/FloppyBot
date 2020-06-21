@@ -7,10 +7,11 @@ import cv2
 import numpy as np
 import re
 
-class Parser(object):
-    def __init__(self):
+class ImageParser(object):
+    def __init__(self, path):
         self.parsed_mvp = list()
         self.image = None
+        pytesseract.pytesseract.tesseract_cmd = path
 
     def PILtoCV(self, image:Image):
         self.image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)

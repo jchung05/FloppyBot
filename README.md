@@ -8,7 +8,7 @@ Discord bot and client script for OCR capturing MVP timestamps in Maplestory Reb
 
   [Cygwin](http://www.cygwin.com/) - Needed to run the script to build everything!
 
-  **OPTIONAL**[MouseLocator](http://efigureout.com/free-utility-to-locate-mouse-cursor-position/) - Needed (for now) to specify coordinates of the external chat box
+  **OPTIONAL** [MouseLocator](http://efigureout.com/free-utility-to-locate-mouse-cursor-position/) - Needed (for now) to specify coordinates of the external chat box
 
 # How to Use:
   * Clone or download me!

@@ -33,7 +33,8 @@ class FloppyBot(object):
     # 15 minute limit on garbage clean up
     def garbagePickup(self, time:int):
         for item in list(self.__garbage):
-            if time > item and time - item > 15:
+            _int = int(item)
+            if time > _int and time - _int > 15:
                 self.__garbage.remove(item)
-            elif item > time and 15 < time + 60 - item < 45:
+            elif _int > time and 15 < time + 60 - _int < 45:
                 self.__garbage.remove(item)

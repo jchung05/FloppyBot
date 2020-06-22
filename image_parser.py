@@ -2,10 +2,8 @@ try:
     from PIL import Image, ImageEnhance, ImageOps, ImageMath
 except ImportError:
     import Image, ImageEnhance, ImageOps, ImageMath
-import pytesseract
-import cv2
+import pytesseract, cv2, re
 import numpy as np
-import re
 
 class ImageParser(object):
     def __init__(self, path):

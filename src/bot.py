@@ -26,7 +26,9 @@ class FloppyBot(object):
 
     # Does not take multiple users in one timestamp currently
     # If the timestamp already exists in queue or in the garbage, move on
-    def enqueue(self, time:int, body:object):
+    def enqueue(self, time:str, body:object):
+        if 0 > int(time) or int(time) >= 60:
+            return None
         if not self.__queue.get(time) and not time in self.__garbage:
             self.__queue[time] = body
 
@@ -38,3 +40,19 @@ class FloppyBot(object):
                 self.__garbage.remove(item)
             elif _int > time and 15 < time + 60 - _int < 45:
                 self.__garbage.remove(item)
+
+    @property
+    def queue(self):
+        return self.__queue
+
+    @queue.setter
+    def queue(self, value):
+        self.__queue = value
+
+    @property
+    def garbage(self):
+        return self.__garbage
+
+    @garbage.setter
+    def garbage(self, value):
+        self.__garbage = value

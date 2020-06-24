@@ -34,23 +34,22 @@ def main():
 
     try:
         while True:
-            for j in range(30):
+            for _ in range(30):
                 start_time = datetime.now()
                 print('{}: Parsing...'.format(start_time.strftime("%H:%M:%S")))
 
                 ss = pyautogui.screenshot(region=(X,Y,W,H))
 
-                for i in range(2):
-                    p.PILtoCV(ss)
-                    p.inflateImage(1.03,1.02)
-                    i and p.invertRGB() # Must run invert and non-invert to catch all text
-                    p.toGrayScale()
-                    p.reduceNoise()
-                    p.parseScreenshot()
-                    for timestamp in p.parsed_mvp:
-                        for k,v in timestamp.items():
-                            bot.enqueue(k,v)
-                    p.reset()
+                p.PILtoCV(ss)
+                p.inflateImage(2,2)
+                p.doubleSpace()
+                p.thresholding()
+                p.parseScreenshot()
+
+                for timestamp in p.parsed_mvp:
+                    for k,v in timestamp.items():
+                        bot.enqueue(k,v)
+                p.reset()
 
                 bot.sendMessage()
 

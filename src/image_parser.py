@@ -5,6 +5,7 @@ except ImportError:
 import pytesseract, cv2, re
 import numpy as np
 
+# We do not use noise removal algorithms because that would eliminate : and .
 class ImageParser(object):
     def __init__(self, path):
         self.parsed_mvp = list()
@@ -34,15 +35,48 @@ class ImageParser(object):
         # self.image = cv2.threshold(cv2.GaussianBlur(self.image, (5, 5), 0), 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
         # self.image = cv2.threshold(cv2.bilateralFilter(self.image, 5, 150, 150), 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
         # self.image = cv2.threshold(cv2.medianBlur(self.image, 1), 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+        pass
 
+    def thresholding(self):
         self.image = cv2.threshold(self.image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
 
+    def dilate(self):
+        kernel = np.ones((5,5),np.uint8)
+        return cv2.dilate(self.image, kernel, iterations = 1)
+
+    def erode(self):
+        kernel = np.ones((5,5),np.uint8)
+        return cv2.erode(self.image, kernel, iterations = 1)
+
+    #opening - erosion followed by dilation
+    def opening(self):
+        kernel = np.ones((5,5),np.uint8)
+        return cv2.morphologyEx(self.image, cv2.MORPH_OPEN, kernel)
+
+    def canny(self):
+        return cv2.Canny(self.image, 100, 200)
+
+    def doubleSpace(self):
+        h,w = self.image.shape[:2]
+        gray = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
+        thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
+
+        pixels = np.sum(thresh, axis=1).tolist()
+        space = np.ones((2, w), dtype=np.uint8) * 255
+        result = np.zeros((1, w), dtype=np.uint8)
+
+        for i, value in enumerate(pixels):
+            if value == 0:
+                result = np.concatenate((result, space), axis=0)
+            row = gray[i:i+1, 0:w]
+            result = np.concatenate((result, row), axis=0)
+        self.image = result
 
     # Take string block and parse for matching objects
     def parseScreenshot(self):
         MVP_PATTERN = r"MVP"
         CH_PATTERN = r"C[CH] *(\d{1,2})"
-        TIME_PATTERN = r"XX[: ](\d{1,2})"
+        TIME_PATTERN = r"XX[: ]*(\d{1,2})"
 
         str_block = pytesseract.image_to_string(self.image)
         str_list = str_block.splitlines()
@@ -54,7 +88,9 @@ class ImageParser(object):
             channel = re.search(CH_PATTERN, s)
             time = re.search(TIME_PATTERN, s)
 
+            # TODO: Bound checking channel and time ints
             if mvp and channel and time:
+                print("I found one!")
                 self.parsed_mvp.append({time.group(1) : {"channel" : channel.group(1)}})
 
     def reset(self):

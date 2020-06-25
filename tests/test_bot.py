@@ -6,6 +6,8 @@ def init():
             '01': {'channel' : '1'}
         }
     bot.garbage = {'02'}
+    bot.hook = 'not_a_real_hook'
+    bot.role = '1'
     return bot
 
 def test_enqueue():

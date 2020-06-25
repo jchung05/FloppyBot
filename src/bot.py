@@ -56,3 +56,19 @@ class FloppyBot(object):
     @garbage.setter
     def garbage(self, value):
         self.__garbage = value
+
+    @property
+    def hook(self):
+        return self.__HOOK
+
+    @hook.setter
+    def hook(self, value):
+        self.__HOOK = value
+
+    @property
+    def role(self):
+        return self.__ROLE_ID
+
+    @role.setter
+    def role(self, value):
+        self.__ROLE_ID = value

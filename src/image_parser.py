@@ -30,6 +30,15 @@ class ImageParser(object):
 
     def inflateImage(self, fx:float, fy:float):
         self.image = cv2.resize(self.image, None, fx=fx, fy=fy, interpolation=cv2.INTER_CUBIC)
+
+    # Mask/saturate background colors away so their grayscale values don't truncate text
+    # Yellow backgrounds have BGR of 30,188,228
+    def maskImage(self):
+        lower = np.array([0, 0, 0], dtype = "uint16")
+        upper = np.array([100, 250, 250], dtype = "uint16")
+        mask = cv2.bitwise_not(cv2.inRange(self.image, lower, upper))
+        self.image = cv2.bitwise_and(self.image, self.image, mask=mask)
+        cv2.imwrite('screenshots/image_masked.png', self.image)
     
     def reduceNoise(self):
         # self.image = cv2.threshold(cv2.GaussianBlur(self.image, (5, 5), 0), 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
@@ -76,7 +85,7 @@ class ImageParser(object):
     def parseScreenshot(self):
         MVP_PATTERN = r"MVP"
         CH_PATTERN = r"C[CH] *(\d{1,2})"
-        TIME_PATTERN = r"XX[: ]*(\d{1,2})"
+        TIME_PATTERN = r"[XX]*[: ]*(\d{1,2})"
 
         str_block = pytesseract.image_to_string(self.image)
         str_list = str_block.splitlines()

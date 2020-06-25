@@ -41,6 +41,7 @@ def main():
                 ss = pyautogui.screenshot(region=(X,Y,W,H))
 
                 p.PILtoCV(ss)
+                p.maskImage()
                 p.inflateImage(2,2)
                 p.doubleSpace()
                 p.thresholding()

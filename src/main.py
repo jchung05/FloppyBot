@@ -1,4 +1,4 @@
-import time, os, pyautogui
+import time, os, pyautogui, cv2
 from datetime import datetime
 from dotenv import load_dotenv
 from bot import FloppyBot
@@ -45,7 +45,10 @@ def main():
                 p.inflateImage(2,2)
                 p.doubleSpace()
                 p.thresholding()
-                p.parseScreenshot()
+
+                for i in range(2):
+                    i and p.invertRGB()
+                    p.parseScreenshot()
 
                 for timestamp in p.parsed_mvp:
                     for k,v in timestamp.items():

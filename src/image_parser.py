@@ -85,7 +85,7 @@ class ImageParser(object):
     def parseScreenshot(self):
         MVP_PATTERN = r"MVP"
         CH_PATTERN = r"C[CH] *(\d{1,2})"
-        TIME_PATTERN = r"[XX]*[: ]*(\d{1,2})"
+        TIME_PATTERN = r"XX[: ]*(\d{2})"
 
         str_block = pytesseract.image_to_string(self.image)
         str_list = str_block.splitlines()

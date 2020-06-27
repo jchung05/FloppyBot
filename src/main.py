@@ -43,16 +43,15 @@ def main():
                 p.PILtoCV(ss)
                 p.maskImage()
                 p.inflateImage(2,2)
-                p.doubleSpace()
                 p.thresholding()
 
                 for i in range(2):
                     i and p.invertRGB()
                     p.parseScreenshot()
 
-                for timestamp in p.parsed_mvp:
-                    for k,v in timestamp.items():
-                        bot.enqueue(k,v)
+                    for timestamp in p.parsed_mvp:
+                        for k,v in timestamp.items():
+                            bot.enqueue(k,v)
                 p.reset()
 
                 bot.sendMessage()

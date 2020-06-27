@@ -34,9 +34,10 @@ class ImageParser(object):
     # Mask/saturate background colors away so their grayscale values don't truncate text
     # Yellow backgrounds have BGR of 30,188,228
     def maskImage(self):
-        lower = np.array([0, 0, 0], dtype = "uint16")
-        upper = np.array([100, 250, 250], dtype = "uint16")
-        mask = cv2.bitwise_not(cv2.inRange(self.image, lower, upper))
+        # TODO: Narrow the yellow bounds because text is being eroded
+        lower = np.array([50,50,50], dtype = "uint16")
+        upper = np.array([245,190,255], dtype = "uint16")
+        mask = cv2.inRange(self.image, lower, upper)
         self.image = cv2.bitwise_and(self.image, self.image, mask=mask)
         cv2.imwrite('screenshots/image_masked.png', self.image)
     
@@ -64,22 +65,6 @@ class ImageParser(object):
 
     def canny(self):
         return cv2.Canny(self.image, 100, 200)
-
-    def doubleSpace(self):
-        h,w = self.image.shape[:2]
-        gray = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
-        thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
-
-        pixels = np.sum(thresh, axis=1).tolist()
-        space = np.ones((2, w), dtype=np.uint8) * 255
-        result = np.zeros((1, w), dtype=np.uint8)
-
-        for i, value in enumerate(pixels):
-            if value == 0:
-                result = np.concatenate((result, space), axis=0)
-            row = gray[i:i+1, 0:w]
-            result = np.concatenate((result, row), axis=0)
-        self.image = result
 
     # Take string block and parse for matching objects
     def parseScreenshot(self):
